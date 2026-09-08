@@ -1,0 +1,48 @@
+package main
+
+import (
+	"database/sql"
+	"fmt"
+	"net/http"
+
+	_ "modernc.org/sqlite"
+)
+
+func koneksidb() *sql.DB {
+	db, err := sql.Open("sqlite", "inventory.db")
+
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return db
+}
+
+func perizinanhttp(Jawaban http.ResponseWriter, Permintaan *http.Request) bool {
+	Jawaban.Header().Set("Access-Control-Allow-Origin", "*")
+	Jawaban.Header().Set("Access-Control-Allow-Headers", "HX-Current-Url, HX-Target, HX-Request")
+
+	if Permintaan.Method == http.MethodOptions {
+		Jawaban.WriteHeader(http.StatusOK)
+		return false
+	}
+
+	return true
+}
+
+func halo(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+	if !perizinanhttp(Jawaban, Permintaan) {
+		return
+	} 
+
+	db := koneksidb()
+	defer db.Close()
+
+	fmt.Fprintf(Jawaban, "halo")
+}
+
+func main() {
+	http.HandleFunc("/halo", halo)
+	http.ListenAndServe(":8080", nil)
+}

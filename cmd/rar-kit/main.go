@@ -4,52 +4,84 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
 	"github.com/rapinsa/rar-project-kit/internal/generator"
 )
 
 func generatego(name string) {
 	fmt.Println("sedang membuat", name)
+	
+	//creating folder and checking the if the error present
 	err := os.Mkdir(name, 0775)
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	data, err := generator.Template.ReadFile("templates/go/main.go")
-
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
+	//making file named main.go and checking if the error present
 	file, err := os.Create(name + "/main.go")
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
+	//reading the template and checking if the error present
+	data, err := generator.Template.ReadFile("templates/go/main.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	//insert the template main.go into the freshly made /main.go inside the folder
 	_,err = file.WriteString(string(data))
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
+	// closed after inserting the template
 	file.Close()
 
-	initial := exec.Command("go", "mod", "init", name)
-
-	initial.Dir = name
-
-	err = initial.Run()
-
+	// execute the command "go mod init {name}"
+	cmd1 := exec.Command("go", "mod", "init", name)
+	// execute it in the folder {name}
+	cmd1.Dir = name
+	//error checking
+	err = cmd1.Run()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
+	// same as above, but this one is adding the sqlite dependency
+	cmd2 := exec.Command("go", "get", "modernc.org/sqlite")
+	cmd2.Dir = name
+	err = cmd2.Run()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	//this one make the index.html
+	file1, err := os.Create(name + "/index.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	data1, err := generator.Template.ReadFile("templates/go/index.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	_, err = file1.WriteString(string(data1))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	file1.Close()
 }
 
 func main() {
