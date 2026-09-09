@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.6"></script>
+    <script>htmx.config.selfRequestsOnly = false</script>
+    <title>CRUD</title>
+</head>
+<body>
+
+    <!-- read -->
+    <div id="read1"></div>
+    <button hx-get="http://127.0.0.1:8080/read" hx-target="#read1" hx-swap="innerHTML">read</button>
+
+    <!-- create -->
+    <form hx-post="http://127.0.0.1:8080/create" hx-target="#status1" hx-swap="innerHTML">
+
+        <input type="text" name="create1" required>
+        <input type="number" name="create2" min="0" value="1" required>
+        
+        <select name="create3" required>
+            <option value="option1"></option>
+            <option value="option2"></option>
+            <option value="option3"></option>
+            <option value="option4"></option>
+        </select>
+
+        <button type="submit">submit</button>
+
+    </form>
+    <div id="status1"></div>
+
+    <!-- update -->
+    <form hx-post="http://127.0.0.1:8080/update" hx-target="#status3" hx-swap="innerHTML">
+
+        <input type="number" name="id" required>
+        <input type="text" name="update1" required>
+        <input type="number" name="update2" min="0" value="1" required>
+
+        <select name="update3" required>
+            <option value="option1"></option>
+            <option value="option2"></option>
+            <option value="option3"></option>
+            <option value="option4"></option>
+        </select>
+
+        <button type="submit">delete</button>
+
+    </form>
+    <div id="status3"></div>
+
+    <!-- delete -->
+    <form hx-post="http://127.0.0.1:8080/delete" hx-target="#status2" hx-swap="innerHTML">
+
+        <input type="number" name="id" required>
+        <button type="submit">delete</button>
+
+    </form>
+    <div id="status2"></div>
+    
+</body>
+</html>
