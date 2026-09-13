@@ -2,5 +2,5 @@ package generator
 
 import "embed"
 
-//go:embed templates/go/main.txt templates/go/index.txt templates/go/crud.txt
+//go:embed templates/go-sqlite/main.txt templates/go-sqlite/index.txt templates/go-sqlite/crud.txt
 var Template embed.FS
