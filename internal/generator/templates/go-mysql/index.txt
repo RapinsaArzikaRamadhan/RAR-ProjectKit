@@ -1,0 +1,10 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.2/htmx.min.js"></script>
+<script>htmx.config.selfRequestsOnly = false;</script>
+
+<button hx-get="http://127.0.0.1:8080/read" hx-target="#info2" hx-swap="innerHTML">tampilkan</button>
+<div id="info2"></div>
+
+<div>
+    want to edit something?
+    <a href="http://127.0.0.1:5500/testing/testingmysql/crud.html">here you go</a>
+</div>

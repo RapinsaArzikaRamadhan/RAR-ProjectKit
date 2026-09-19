@@ -45,66 +45,128 @@ func command_exec(nama string, command string, args ...string) error {
 
 func go_sqlite(name string) {
 	fmt.Println("✓ generating the folder")
-	err := create_folder(name, 0775)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	err = create_folder(name + "/web", 0775)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	err = create_folder(name + "/database", 0775)
-	if err != nil {
-		fmt.Println(err)
-		return
+	{
+		err := create_folder(name, 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/web", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/database", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 
+
 	fmt.Println("✓ generating the file")
-	err = create_file(name + "/main.go", "templates/go-sqlite/main.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	err = create_file(name + "/web/index.html", "templates/go-sqlite/index.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	err = create_file(name + "/web/crud.html", "templates/go-sqlite/crud.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
+	{
+		err := create_file(name + "/main.go", "templates/go-sqlite/main.txt")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/web/index.html", "templates/go-sqlite/index.txt")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/web/crud.html", "templates/go-sqlite/crud.txt")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
 	
-	fmt.Println("✓ running the command to installing dependency")
-	err = command_exec(name, "go", "mod", "init", name)
-	if err != nil {
-		fmt.Println(err)
-		return
+	fmt.Println("✓ running the command to..")
+	{
+		fmt.Println("✓ initializing go mod")
+		err := command_exec(name, "go", "mod", "init", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println("✓ installing sqlite dependency")
+		
+		err = command_exec(name, "go", "get", "-v", "modernc.org/sqlite")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("✓ initializing sqlite databases")
+		err = command_exec(name, "sqlite3", "database/database.db", ".databases")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
-	err = command_exec(name, "go", "get", "modernc.org/sqlite")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	err = command_exec(name, "sqlite3", "database/database.db", ".databases")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	
 
 	fmt.Println("done!")
 
+}
+
+func go_mysql(name string) {
+	fmt.Println("✓ generating the folder")
+	{
+		err := create_folder(name, 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/web", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+
+	fmt.Println("✓ generating the file")
+	{
+		err := create_file(name + "/main.go", "templates/go-mysql/main.txt")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/web/index.html", "templates/go-mysql/index.txt")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/web/crud.html", "templates/go-mysql/crud.txt")
+	}
+
+	fmt.Println("✓ running the command to..")
+	{
+		fmt.Println("✓ initializing go mod")
+		err := command_exec(name, "go","mod","init", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("✓ installing mysql dependency")
+		err = command_exec(name, "go","get","-v","github.com/go-sql-driver/mysql")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	
 }
 
 func main() {
 	
 		if len(os.Args) < 2 {
 			fmt.Println("please select the project type and its name")
-			fmt.Println("--go for golang, --cpp for cpp, etc")
-			fmt.Println("example : rar-kit --go hello")
+			fmt.Println("--go-sqlite and --go-mysql for golang, etc")
+			fmt.Println("example : rar-kit --go-mysql hello")
 			return
 		} 
 
@@ -131,7 +193,7 @@ func main() {
 			case "--go-sqlite":
 				go_sqlite(os.Args[2])
 			case "--go-mysql":
-				fmt.Println("N/A")
+				go_mysql(os.Args[2])
 			case "--java":
 				fmt.Println("N/A")
 			default:

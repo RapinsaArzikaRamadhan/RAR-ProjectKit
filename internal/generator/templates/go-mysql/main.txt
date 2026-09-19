@@ -5,16 +5,21 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-
-	_ "modernc.org/sqlite"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func koneksidb() (*sql.DB, error) {
-	db, err := sql.Open("sqlite", "database/database.db")
-
+	// jangan lupa di ubah sesuai dengan db nye
+	dsn := "LatihanMysql:12345@tcp(127.0.0.1:3306)/Latihan1"
+	db, err := sql.Open("mysql", dsn)
+	
 	if err != nil {
 		return nil, err
 	}
+
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}	
 
 	return db, nil
 }
@@ -57,10 +62,11 @@ func create(Jawaban http.ResponseWriter, Permintaan *http.Request) {
 		return
 	}
 
-	_, err = db.Exec("insert into items (name, category, qty) values (?,?,?)", name, category, qty)
+	_, err = db.Exec("insert into items (name, category, qty) value (?,?,?)", name, category, qty)
+	
 	if err != nil {
-		fmt.Println(err)
-		return
+    fmt.Println(err)
+    return
 	}
 
 	fmt.Fprintf(Jawaban, "done kang!")
@@ -133,7 +139,6 @@ func update(Jawaban http.ResponseWriter, Permintaan *http.Request) {
 	}
 	defer db.Close()
 
-
 	id,err := strconv.Atoi(Permintaan.FormValue("id"))
 	if err != nil{
 		fmt.Println(err)
@@ -179,9 +184,10 @@ func delete(Jawaban http.ResponseWriter, Permintaan *http.Request) {
 		return
 	}
 	_, err = db.Exec("delete from items where id = ?", id)
+
 	if err != nil {
-		fmt.Println(err)
-		return
+    fmt.Println(err)
+    return
 	}
 
 	fmt.Fprintf(Jawaban, "berhasil!")

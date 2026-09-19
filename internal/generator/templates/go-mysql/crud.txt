@@ -1,0 +1,38 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.2/htmx.min.js"></script>
+<script>htmx.config.selfRequestsOnly = false;</script>
+
+<form hx-post="http://127.0.0.1:8080/create" hx-target="#info1" hx-swap="innerHTML">
+    <input type="text" name="name" placeholder="isi nama" required>
+    <select name="category" required>
+        <option value="val12">1</option>
+        <option value="val13">2</option>
+        <option value="val14">3</option>
+    </select>
+    <input type="number" name="qty" placeholder="jumlah" required>
+    <button type="submit">kirim</button>
+    <div id="info1"></div>
+</form>
+
+<button hx-get="http://127.0.0.1:8080/read" hx-target="#info2" hx-swap="innerHTML">tampilkan</button>
+<div id="info2"></div>
+
+<form hx-post="http://127.0.0.1:8080/delete" hx-target="#info3" hx-swap="innerHTML">
+    <input type="number" name="id" placeholder="insert the id" required>
+    <button type="submit">hapus</button>
+    <div id="info3"></div>
+</form>
+
+<form hx-post="http://127.0.0.1:8080/update" hx-target="#info4" hx-swap="innerHTML">
+    <input type="number" name="id" placeholder="insert the id" required>
+    <input type="text" name="name" placeholder="name" required>
+    <select name="category" aria-placeholder="category" required>
+        <option value="val12">1</option>
+        <option value="val13">2</option>
+        <option value="val14">3</option>
+    </select>
+    <input type="number" name="qty" placeholder="qty" required>
+    <button type="submit">perbarui</button>
+    <div id="info4"></div>
+</form>
+
+<a href="http://127.0.0.1:5500/testing/testingmysql/index.html">done editing? wanna go back?</a>

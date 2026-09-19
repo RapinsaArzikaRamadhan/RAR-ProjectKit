@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
     <script>htmx.config.selfRequestsOnly = false</script>
     <title>CRUD</title>
 </head>
@@ -17,16 +17,14 @@
     <!-- create -->
     <form hx-post="http://127.0.0.1:8080/create" hx-target="#status1" hx-swap="innerHTML">
 
-        <input type="text" name="create1" required>
-        <input type="number" name="create2" min="0" value="1" required>
-        
-        <select name="create3" required>
+        <input type="text" name="name" required>        
+        <select name="category" required>
             <option value="option1"></option>
             <option value="option2"></option>
             <option value="option3"></option>
             <option value="option4"></option>
         </select>
-
+        <input type="number" name="qty" min="0" value="1" required>
         <button type="submit">submit</button>
 
     </form>
@@ -36,17 +34,16 @@
     <form hx-post="http://127.0.0.1:8080/update" hx-target="#status3" hx-swap="innerHTML">
 
         <input type="number" name="id" required>
-        <input type="text" name="update1" required>
-        <input type="number" name="update2" min="0" value="1" required>
-
-        <select name="update3" required>
+        <input type="text" name="name" required>        
+        <select name="category" required>
             <option value="option1"></option>
             <option value="option2"></option>
             <option value="option3"></option>
             <option value="option4"></option>
         </select>
+        <input type="number" name="qty" min="0" value="1" required>
 
-        <button type="submit">delete</button>
+        <button type="submit">update</button>
 
     </form>
     <div id="status3"></div>
