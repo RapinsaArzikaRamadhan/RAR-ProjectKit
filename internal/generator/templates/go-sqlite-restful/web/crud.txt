@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- create -->
+    <div>
+        <input type="text" placeholder="isi nama" id="create-nama">
+        <input type="number" placeholder="isi umur" min="0" value="1" id="create-umur">
+        <button id="kirim">kirim</button>
+
+        <script src="../js/create.js"></script>
+    </div>
+
+    <!-- read -->
+    <div>
+        <button id="manggil">tampilkan</button>
+        <div id="penampil"></div>
+        <script src="../js/read.js"></script>
+    </div>
+
+    <!-- update -->
+    <div>
+        <input type="number" placeholder="id mana yang mau di ganti" min="0" value="1" id="read-id">
+        <input type="text" placeholder="ganti nama" id="read-nama">
+        <input type="number" placeholder="ganti umur" id="read-umur">
+        <button id="update">update</button>
+
+        <script src="../js/update.js"></script>
+    </div>
+
+    <!-- delete -->
+    <div>
+        <input type="number" placeholder="masukan id" min="0" value="1" id="del-id">
+        <button id="tombolhapus">hapus</button>
+        <script src="../js/delete.js"></script>
+    </div>
+
+    <a href="http://127.0.0.1:5500/testing3/latihan/web/index.html">done editing and want go back?</a>
+
+</body>
+
+</html>

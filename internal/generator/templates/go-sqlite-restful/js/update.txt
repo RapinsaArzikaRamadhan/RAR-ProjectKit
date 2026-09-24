@@ -1,0 +1,20 @@
+const updateID = document.querySelector("#read-id")
+const updateNama = document.querySelector("#read-nama")
+const updateUmur = document.querySelector("#read-umur")
+const updatebutton = document.querySelector("#update")
+
+updatebutton.addEventListener("click", async function () {
+    const data = {
+        id: Number(updateID.value),
+        nama: updateNama.value,
+        umur: Number(updateUmur.value)
+    }
+
+    console.log(JSON.stringify(data));
+
+    const response = await fetch("http://127.0.0.1:8080/pengguna", {
+        method: "PUT",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(data)
+    })
+})

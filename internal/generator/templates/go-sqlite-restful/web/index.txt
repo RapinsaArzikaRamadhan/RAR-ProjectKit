@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- create -->
+    <div>
+        <input type="text" placeholder="isi nama" id="create-nama">
+        <input type="number" placeholder="isi umur" min="0" value="1" id="create-umur">
+        <button id="kirim">kirim</button>
+
+        <script src="../js/create.js"></script>
+    </div>
+
+    <!-- read -->
+    <div>
+        <button id="manggil">tampilkan</button>
+        <div id="penampil"></div>
+        <script src="../js/read.js"></script>
+    </div>
+
+    <a href="http://127.0.0.1:5500/testing3/latihan/web/crud.html">wanna edit something?</a>
+
+</body>
+
+</html>

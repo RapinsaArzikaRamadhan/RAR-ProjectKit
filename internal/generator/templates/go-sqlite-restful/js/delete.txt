@@ -1,0 +1,16 @@
+const deleteID = document.querySelector("#del-id")
+const tombolhapus = document.querySelector("#tombolhapus")
+
+tombolhapus.addEventListener("click", async function () {
+    const data = {
+        id: Number(deleteID.value)
+    }
+
+    console.log(JSON.stringify(data))
+
+    const response = await fetch("http://127.0.0.1:8080/pengguna", {
+        method: "DELETE",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(data)
+    })
+})

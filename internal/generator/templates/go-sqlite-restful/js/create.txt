@@ -1,0 +1,18 @@
+const createNama = document.querySelector("#create-nama")
+const createUmur = document.querySelector("#create-umur")
+const tombolkirim = document.querySelector("#kirim")
+
+tombolkirim.addEventListener("click", async function () {
+    const data = {
+        nama: createNama.value,
+        umur: Number(createUmur.value)
+    }
+
+    console.log(JSON.stringify(data));
+
+    const response = await fetch("http://127.0.0.1:8080/pengguna", {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(data)
+    })
+})
