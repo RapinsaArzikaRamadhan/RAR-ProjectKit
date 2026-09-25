@@ -57,5 +57,6 @@
     </form>
     <div id="status2"></div>
     
+    <a href="index.html">done editing? wanna go back?</a>
 </body>
 </html>

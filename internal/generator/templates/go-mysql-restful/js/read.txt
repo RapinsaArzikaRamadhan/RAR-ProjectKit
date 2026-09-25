@@ -7,7 +7,7 @@ tombolmemanggil.addEventListener("click", async function () {
     console.log(data)
 
     penampil.innerHTML = ""
-
+        
     for (const item of data) {
         penampil.innerHTML += item.id + " | " + item.nama + " | " + item.umur + "<br>"
     }

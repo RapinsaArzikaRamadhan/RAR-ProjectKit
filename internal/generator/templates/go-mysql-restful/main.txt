@@ -1,0 +1,17 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"{{MODULE}}/handler"
+)
+
+
+func main() {
+	http.HandleFunc("/pengguna", handler.Pengguna)
+	err := http.ListenAndServe(":8080", nil)
+
+if err != nil {
+    fmt.Println(err)
+}
+}

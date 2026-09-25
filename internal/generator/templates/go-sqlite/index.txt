@@ -14,5 +14,10 @@
 
         <button hx-get="http://127.0.0.1:8080/read" hx-target="#target" hx-swap="innerHTML">klik coba</button>
     </div>
+
+    <div>
+        want to edit something?
+        <a href="crud.html">here you go</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,154 @@
+package handler
+
+import (
+	"net/http"
+	"fmt"
+	"encoding/json"
+	"{{MODULE}}/middleware"
+	"{{MODULE}}/database"
+	"{{MODULE}}/model"
+)
+
+func create(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+	if !middleware.CORS(Jawaban, Permintaan) {
+		return
+	}
+
+	var data model.Items
+
+	db, err := database.DB()
+	if err != nil {
+		fmt.Println(err)
+		return	
+	}
+	defer db.Close()
+
+	err = json.NewDecoder(Permintaan.Body).Decode(&data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(data)
+
+	_,err = db.Exec("insert into pengguna (nama,umur) values (?,?)", data.Nama, data.Umur)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+}
+
+func read(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+	if !middleware.CORS(Jawaban, Permintaan) {
+		return
+	}
+
+	db,err := database.DB()
+	if err != nil  {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+
+	rows,err := db.Query("select * from pengguna")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	var datas []model.Items
+
+	for rows.Next() {
+		var data model.Items
+
+		err := rows.Scan(&data.ID, &data.Nama, &data.Umur)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		datas = append(datas, data)
+	}
+
+	if err := rows.Err(); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	Jawaban.Header().Set("Content-Type", "Application/json")
+	json.NewEncoder(Jawaban).Encode(datas)
+}
+
+func update(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+	if !middleware.CORS(Jawaban, Permintaan) {
+		return
+	}
+
+	db,err := database.DB()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+
+	var data model.Items
+
+	err = json.NewDecoder(Permintaan.Body).Decode(&data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(data)
+	
+	_,err = db.Exec("update pengguna set nama = ?, umur = ? where id = ?", data.Nama, data.Umur, data.ID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+func delete(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+	if !middleware.CORS(Jawaban, Permintaan) {
+		return
+	}
+
+	var data model.Items
+
+	db,err := database.DB()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer db.Close()
+
+	err = json.NewDecoder(Permintaan.Body).Decode(&data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(data)
+
+	_,err = db.Exec("delete from pengguna where id = ?", data.ID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+func Pengguna(Jawaban http.ResponseWriter, Permintaan *http.Request) {
+
+	if !middleware.CORS(Jawaban, Permintaan) {
+		return
+	}
+
+	switch Permintaan.Method {
+	case http.MethodPost:
+		create(Jawaban,Permintaan)
+	case http.MethodGet:
+		read(Jawaban,Permintaan)
+	case http.MethodPut:
+		update(Jawaban,Permintaan)
+	case http.MethodDelete:
+		delete(Jawaban,Permintaan)
+	}
+}

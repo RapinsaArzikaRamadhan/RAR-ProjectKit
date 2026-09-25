@@ -255,6 +255,147 @@ func go_sqlite_restful(name string) {
 
 }
 
+func go_mysql_restful(name string) {
+
+	fmt.Println("✓ generating the folder")
+	{
+		err := create_folder(name, 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/database", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/handler", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/js", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/middleware", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/model", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_folder(name + "/web", 0775)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+
+
+	fmt.Println("✓ generating the file")
+	{
+		err := create_file(name + "/main.go", "templates/go-mysql-restful/main.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /web
+		err = create_file(name + "/web/index.html", "templates/go-mysql-restful/web/index.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/web/crud.html", "templates/go-mysql-restful/web/crud.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /js
+		err = create_file(name + "/js/create.js", "templates/go-mysql-restful/js/create.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/js/delete.js", "templates/go-mysql-restful/js/delete.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/js/read.js", "templates/go-mysql-restful/js/read.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = create_file(name + "/js/update.js", "templates/go-mysql-restful/js/update.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /middleware
+		err = create_file(name + "/middleware/middleware.go", "templates/go-mysql-restful/middleware/middleware.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /model
+		err = create_file(name + "/model/model.go", "templates/go-mysql-restful/model/model.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /database
+		err = create_file(name + "/database/database.go", "templates/go-mysql-restful/database/database.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /handler
+		err = create_file(name + "/handler/handler.go", "templates/go-mysql-restful/handler/handler.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		// /.env
+		err = create_file(name + "/.env", "templates/go-mysql-restful/env.txt", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	
+	fmt.Println("✓ running the command to..")
+	{
+		fmt.Println("✓ initializing go mod")
+		err := command_exec(name, "go", "mod", "init", name)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println("✓ installing mysql dependency")
+		
+		err = command_exec(name, "go", "get", "-v", "github.com/go-sql-driver/mysql")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		err = command_exec(name, "go", "get", "-v", "github.com/joho/godotenv")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	
+
+	fmt.Println("done!")
+
+}
+
 func go_mysql(name string) {
 	fmt.Println("✓ generating the folder")
 	{
@@ -339,6 +480,8 @@ func main() {
 				go_mysql(os.Args[2])
 			case "--go-sqlite-restful":
 				go_sqlite_restful(os.Args[2])
+			case "--go-mysql-restful":
+				go_mysql_restful(os.Args[2])
 			default:
 				fmt.Println("sorry, that language template not avaiable for now")
 				fmt.Println("whats available for now is --go --cpp --java")
