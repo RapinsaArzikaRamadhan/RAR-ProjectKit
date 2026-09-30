@@ -4,11 +4,10 @@ const penampil = document.querySelector("#penampil")
 tombolmemanggil.addEventListener("click", async function () {
     const response = await fetch("http://127.0.0.1:8080/pengguna")
     const data = await response.json()
-    console.log(data)
 
     penampil.innerHTML = ""
 
     for (const item of data) {
-        penampil.innerHTML += item.id + " | " + item.nama + " | " + item.umur + "<br>"
+        // loop read
     }
 })

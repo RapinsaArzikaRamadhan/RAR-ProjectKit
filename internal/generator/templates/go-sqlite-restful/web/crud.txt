@@ -11,8 +11,7 @@
 
     <!-- create -->
     <div>
-        <input type="text" placeholder="isi nama" id="create-nama">
-        <input type="number" placeholder="isi umur" min="0" value="1" id="create-umur">
+        <!-- form create here -->
         <button id="kirim">kirim</button>
 
         <script src="../js/create.js"></script>
@@ -27,9 +26,7 @@
 
     <!-- update -->
     <div>
-        <input type="number" placeholder="id mana yang mau di ganti" min="0" value="1" id="read-id">
-        <input type="text" placeholder="ganti nama" id="read-nama">
-        <input type="number" placeholder="ganti umur" id="read-umur">
+        <!-- form update here -->
         <button id="update">update</button>
 
         <script src="../js/update.js"></script>

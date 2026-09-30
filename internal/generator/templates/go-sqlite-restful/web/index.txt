@@ -11,8 +11,7 @@
 
     <!-- create -->
     <div>
-        <input type="text" placeholder="isi nama" id="create-nama">
-        <input type="number" placeholder="isi umur" min="0" value="1" id="create-umur">
+        <!-- form create here -->
         <button id="kirim">kirim</button>
 
         <script src="../js/create.js"></script>

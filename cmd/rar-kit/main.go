@@ -484,7 +484,7 @@ func main() {
 				go_mysql_restful(os.Args[2])
 			default:
 				fmt.Println("sorry, that language template not avaiable for now")
-				fmt.Println("whats available for now is --go --cpp --java")
+				fmt.Println("whats available for now is --go-sqlite --go-mysql --go-sqlite-restful --go-mysql-restful")
 			}
 
 			return
